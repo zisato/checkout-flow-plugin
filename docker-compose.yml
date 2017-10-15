@@ -1,0 +1,11 @@
+version: "3.2"
+
+services:
+    php:
+        build: docker/php
+        working_dir: /var/www/html
+        ports:
+            - "4444:8080"
+        volumes:
+            - ./:/var/www/html
+

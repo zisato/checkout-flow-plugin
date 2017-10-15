@@ -1,0 +1,7 @@
+Jrc\CheckoutFlowPlugin\Entity\Channel:
+    type: entity
+    table: sylius_channel
+    fields:
+        checkoutFlow:
+            type: string
+            nullable: true

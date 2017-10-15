@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <imports>
+        <import resource="services/contexts.xml" />
+        <import resource="services/pages.xml" />
+    </imports>
+    
+    <services>
+        <!-- Fixtures-->
+        <service id="jrc.checkout_flow.context.tests.fixtures.channel" class="Tests\Jrc\CheckoutFlowPlugin\DataFixtures\ORM\ChannelFixtures">
+        </service>
+    </services>
+</container>

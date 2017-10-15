@@ -1,0 +1,43 @@
+sylius_shop_checkout_select_payment_and_complete:
+    path: /payment-complete
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: complete
+            flash: false
+            template: JrcCheckoutFlowPlugin:Checkout:selectPaymentAndComplete.html.twig
+            form: 
+                type: Sylius\Bundle\CoreBundle\Form\Type\Checkout\SelectPaymentType
+            redirect:
+                route: sylius_shop_order_pay
+                parameters:
+                    tokenValue: resource.tokenValue
+            repository:
+                method: findCartForSummary
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart().getId()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: complete
+
+sylius_shop_checkout_select_shipping_and_payment:
+    path: /shipping-payment
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: payment
+            flash: false
+            template: JrcCheckoutFlowPlugin:Checkout:selectShippingPayment.html.twig
+            form: Jrc\CheckoutFlowPlugin\Form\Type\Checkout\SelectShippingAndPaymentType
+            redirect:
+                route: sylius_shop_checkout_complete
+                parameters: []
+            repository:
+                method: find
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: select_shipping_payment

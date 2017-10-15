@@ -1,0 +1,38 @@
+services:
+    jrc.checkout_flow_plugin.form.extension.checkout_flow_configuration:
+        class: Jrc\CheckoutFlowPlugin\Form\Extension\CheckoutFlowConfigurationExtension
+        arguments: ["%jrc.checkout_flow_plugin.sm_configs_choices%"]
+        tags:
+            - { name: form.type_extension, extended_type: Sylius\Bundle\ChannelBundle\Form\Type\ChannelType }
+
+    jrc.checkout_flow_plugin.listener.cart_update:
+        class: Jrc\CheckoutFlowPlugin\EventListener\CartUpdateListener
+        arguments: ["@sylius.repository.order"]
+        tags:
+            - { name: kernel.event_listener, event: sylius.channel.post_update, method: onChannelUpdate }
+    
+    jrc.checkout_flow_plugin.form.select_shipping_and_payment:
+        class: Jrc\CheckoutFlowPlugin\Form\Type\Checkout\SelectShippingAndPaymentType
+        arguments:
+            - %sylius.model.order.class%
+            - %sylius.form.type.order.validation_groups%
+        tags:
+            - { name: form.type }
+            
+    # decorated services
+    jrc.checkout_flow_plugin.sm.factory:
+        class: Jrc\CheckoutFlowPlugin\Factory\GroupFactory
+        decorates: sm.factory
+        arguments: 
+            - "%sm.configs%"
+            - "@event_dispatcher"
+            - "@sm.callback_factory"
+            - "%jrc.checkout_flow_plugin.sm_configs%"
+
+    jrc.checkout_flow_plugin.router.group_checkout_state:
+        class: Jrc\CheckoutFlowPlugin\GroupCheckoutStateUrlGenerator
+        decorates: sylius.router.checkout_state
+        arguments: 
+            - "@jrc.checkout_flow_plugin.router.group_checkout_state.inner"
+            - "@sylius.context.channel"
+            - "%jrc.checkout_flow_plugin.route_map%"

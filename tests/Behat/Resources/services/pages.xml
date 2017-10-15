@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- shop flow 1 -->
+        <service id="jrc.checkout_flow.page.shop.payment_and_complete" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Shop\PaymentAndCompletePage" parent="sylius.behat.symfony_page" public="false">
+            <argument type="string">sylius_shop_checkout_select_payment_and_complete</argument>
+        </service>
+        
+        <!-- shop flow 2 -->
+        <service id="jrc.checkout_flow.page.shop.select_shipping_and_payment" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Shop\SelectShippingAndPaymentPage" parent="sylius.behat.symfony_page" public="false">
+            <argument type="string">sylius_shop_checkout_select_shipping_and_payment</argument>
+        </service>
+        
+        <!-- admin -->
+        <service id="jrc.checkout_flow.page.admin.create" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Admin\CreatePage" parent="sylius.behat.symfony_page" public="false">
+            <argument type="string">sylius_admin_channel_create</argument>
+        </service>
+
+        <service id="jrc.checkout_flow.page.admin.update" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Admin\UpdatePage" parent="sylius.behat.symfony_page" public="false">
+            <argument type="string">sylius_admin_channel_update</argument>
+        </service>
+    </services>
+</container>

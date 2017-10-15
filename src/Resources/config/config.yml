@@ -1,0 +1,11 @@
+sylius_channel:
+    resources:
+        channel:
+            classes:
+                model: Jrc\CheckoutFlowPlugin\Entity\Channel
+
+sylius_order:
+    resources:
+        order:
+            classes:
+                repository: Jrc\CheckoutFlowPlugin\Repository\OrderRepository

@@ -1,0 +1,54 @@
+# cart -> address -> select shipping and payment -> complete
+sylius_order_checkout_2:
+    choice_label: 'Cart->Address->Shipping-and-Payment->Complete'
+    route_map:
+        empty_order:
+            route: sylius_shop_cart_summary
+        cart:
+            route: sylius_shop_checkout_address
+        addressed:
+            route: sylius_shop_checkout_select_shipping_and_payment
+        shipping_payment_selected:
+            route: sylius_shop_checkout_complete
+    state_machine:
+        class: "%sylius.model.order.class%"
+        property_path: checkoutState
+        graph: sylius_order_checkout
+        state_machine_class: "%sylius.state_machine.class%"
+        states:
+            cart: ~
+            addressed: ~
+            shipping_payment_selected: ~
+            completed: ~
+        transitions:
+            address:
+                from: [cart, addressed, shipping_payment_selected]
+                to: addressed
+            select_shipping_payment:
+                from: [addressed, shipping_payment_selected, completed]
+                to: shipping_payment_selected
+            complete:
+                from: [shipping_payment_selected]
+                to: completed
+        callbacks:
+            after:
+                sylius_process_cart:
+                    on: ["select_shipping", "address", "select_shipping_payment"]
+                    do: ["@sylius.order_processing.order_processor", "process"]
+                    args: ["object"]
+                sylius_create_order:
+                    on: ["complete"]
+                    do: ["@sm.callback.cascade_transition", "apply"]
+                    args: ["object", "event", "'create'", "'sylius_order'"]
+                sylius_save_checkout_completion_date:
+                    on: ["complete"]
+                    do: ["object", "completeCheckout"]
+                    args: ["object"]
+                sylius_control_payment_state:
+                    on: ["complete"]
+                    do: ["@sylius.state_resolver.order_payment", "resolve"]
+                    args: ["object"]
+                sylius_control_shipping_state:
+                    on: ["complete"]
+                    do: ["@sylius.state_resolver.order_shipping", "resolve"]
+                    args: ["object"]

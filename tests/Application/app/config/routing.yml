@@ -1,0 +1,12 @@
+sylius:
+    resource: "../../../../vendor/sylius/sylius/app/config/routing.yml"
+
+# Put your own routes here
+
+jrc_checkout_flow_plugin_admin:
+    resource: "@JrcCheckoutFlowPlugin/Resources/config/app/routing/admin.yml"
+    prefix: /admin
+    
+jrc_checkout_flow_plugin_checkout:
+    resource: "@JrcCheckoutFlowPlugin/Resources/config/app/routing/checkout.yml"
+    prefix: /checkout

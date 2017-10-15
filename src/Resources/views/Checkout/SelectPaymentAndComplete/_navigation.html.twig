@@ -1,0 +1,7 @@
+{% set enabled = order.payments|length %}
+
+<div class="ui one column grid">
+    <div class="column">
+        <button type="submit" class="ui huge primary fluid icon labeled button"><i class="check icon"></i> {{ 'sylius.ui.place_order'|trans }}</button>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+default:
+    suites:
+        selecting_checkout_flow_available_for_channel:
+            contexts_services:
+                - sylius.behat.context.hook.doctrine_orm
+
+                - sylius.behat.context.transform.channel
+                - sylius.behat.context.transform.currency
+                - sylius.behat.context.transform.locale
+
+                - sylius.behat.context.setup.admin_security
+                - sylius.behat.context.setup.currency
+                - sylius.behat.context.setup.locale
+
+                - jrc.checkout_flow.context.ui.admin.channel
+                - sylius.behat.context.ui.admin.notification
+            filters:
+                tags: "@checkout_flow_ui_admin_selecting_checkout_flow && @ui"

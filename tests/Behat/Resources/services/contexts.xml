@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>        
+        <!-- shop flow 1 -->
+        <service id="jrc.checkout_flow.context.ui.shop.use_checkout_flow_1" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Context\Ui\Shop\UseCheckoutFlow1Context">
+            <argument type="service" id="sylius.behat.page.shop.checkout.address" />
+            <argument type="service" id="jrc.checkout_flow.page.shop.payment_and_complete" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+        
+        <!-- shop flow 2 -->
+        <service id="jrc.checkout_flow.context.ui.shop.use_checkout_flow_2" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Context\Ui\Shop\UseCheckoutFlow2Context">
+            <argument type="service" id="sylius.behat.page.shop.checkout.address" />
+            <argument type="service" id="jrc.checkout_flow.page.shop.select_shipping_and_payment" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+        
+        <!-- admin -->
+        <service id="jrc.checkout_flow.context.ui.admin.channel" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext">
+            <argument type="service" id="__symfony_shared__.doctrine.orm.entity_manager" />
+            <argument type="service" id="jrc.checkout_flow.context.tests.fixtures.channel" />
+            <argument type="service" id="jrc.checkout_flow.page.admin.create" />
+            <argument type="service" id="jrc.checkout_flow.page.admin.update" />
+            <tag name="fob.context_service" />
+        </service>
+    </services>
+</container>

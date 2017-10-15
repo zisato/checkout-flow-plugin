@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: Jrc\CheckoutFlowPlugin
+        psr4_prefix: Jrc\CheckoutFlowPlugin
