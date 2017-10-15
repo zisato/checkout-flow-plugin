@@ -5,7 +5,7 @@ This plugin integrated different checkout flow with Sylius based applications. A
 ## Installation
 
 ```bash
-$ composer require javierrodriguezcuevas/checkout-flow-plugin
+$ composer require jrc/checkout-flow-plugin
 $ bin/console doctrine:schema:update --force
 
 ```
