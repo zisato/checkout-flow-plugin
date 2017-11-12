@@ -10,6 +10,11 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 
+/**
+ * Description of GroupCheckoutResolver
+ *
+ * @author javierrodriguez
+ */
 final class GroupCheckoutResolver implements EventSubscriberInterface
 {    
     /**

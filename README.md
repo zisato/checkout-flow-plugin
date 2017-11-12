@@ -52,7 +52,7 @@ Jrc_checkout_flow_plugin_checkout:
 
 ## Configuration
 
-Import custom checkout flow files
+Adding custom checkout flow files
 
 ```yaml
 # app/config/config.yml
@@ -61,7 +61,21 @@ Import custom checkout flow files
 
 jrc_checkout_flow_plugin:
     sm_paths:
-        - 'custom/path/new/checkout/flow'
+        - 'custom/path/new/checkout/custom_flow.yml'
+```
+
+Custom flow files should have following format:
+
+```yaml
+# custom/path/new/checkout/custom_flow.yml
+
+...
+
+custom_flow:
+    choice_label: Name admin choice label
+    route_map: [Sylius doc](http://docs.sylius.org/en/latest/cookbook/shop/checkout.html#adjust-checkout-resolver)
+    state_machine: [Sylius doc](http://docs.sylius.org/en/latest/book/architecture/state_machine.html#state-machine)
+
 ```
 
 If you create steps with new routes, don't forget to add it to routing.yml
