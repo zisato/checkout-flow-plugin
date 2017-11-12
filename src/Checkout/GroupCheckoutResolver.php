@@ -30,24 +30,24 @@ final class GroupCheckoutResolver implements EventSubscriberInterface
     /**
      * @var array
      */
-    private $groupedRouterMaps;
+    private $groupedFlowRoutes;
     
     /**
      * @param RequestMatcherInterface $requestMatcher
      * @param CartContextInterface $cartContext
      * @param ChannelContextInterface $channelContext
-     * @param array $groupedRouterMaps
+     * @param array $groupedFlowRoutes
      */
     public function __construct(
         RequestMatcherInterface $requestMatcher,
         CartContextInterface $cartContext,
         ChannelContextInterface $channelContext,
-        array $groupedRouterMaps
+        array $groupedFlowRoutes
     ) {
         $this->requestMatcher = $requestMatcher;
         $this->cartContext = $cartContext;
         $this->channelContext = $channelContext;
-        $this->groupedRouterMaps = $groupedRouterMaps;
+        $this->groupedFlowRoutes = $groupedFlowRoutes;
     }
 
     /**
@@ -67,9 +67,7 @@ final class GroupCheckoutResolver implements EventSubscriberInterface
         
         $route = $request->attributes->get('_route');
         $checkoutFlow = $this->channelContext->getChannel()->getCheckoutFlow();
-        $routes = array_map(function($r) {
-            return $r['route'];
-        }, $this->groupedRouterMaps[$checkoutFlow]);
+        $routes = $this->groupedFlowRoutes[$checkoutFlow];
 
         if (array_search($route, $routes) === false) {
             $message = sprintf('No route found for "%s %s"', $request->getMethod(), $request->getPathInfo());

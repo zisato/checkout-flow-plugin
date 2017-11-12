@@ -42,6 +42,9 @@ final class JrcCheckoutFlowExtension extends Extension implements PrependExtensi
         
         $formChoiceConfigs = $this->getFormChoiceConfig($smConfigs);
         $container->setParameter('jrc.checkout_flow_plugin.sm_configs_choices', $formChoiceConfigs);
+        
+        $flowRoutes = $this->getFlowRoutesFromMapConfigs($routeMapConfigs);
+        $container->setParameter('jrc.checkout_flow_plugin.flow_routes', $flowRoutes);
     }
     
     public function prepend(ContainerBuilder $container)
@@ -123,6 +126,18 @@ final class JrcCheckoutFlowExtension extends Extension implements PrependExtensi
         return $result;
     }
     
+    protected function getFlowRoutesFromMapConfigs(array $routeMapConfigs)
+    {
+        $result = [];
+        foreach ($routeMapConfigs as $key => $value) {
+            $result[$key] = array_map(function($r) {
+                return $r['route'];
+            }, $value);
+        }
+        
+        return $result;
+    }
+
     protected function setDefaultValue(array &$array, $key, $value)
     {
         if (!isset($array[$key])) {

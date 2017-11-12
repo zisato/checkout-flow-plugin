@@ -25,7 +25,7 @@ services:
             - "@jrc.checkout_flow_plugin.matcher.group_checkout"
             - "@sylius.context.cart"
             - "@sylius.context.channel"
-            - "%jrc.checkout_flow_plugin.route_map%"
+            - "%jrc.checkout_flow_plugin.flow_routes%"
         tags:
             - { name: kernel.event_subscriber }
             
