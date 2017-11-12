@@ -1,6 +1,6 @@
 <?php
 
-namespace Jrc\CheckoutFlowPlugin;
+namespace Jrc\CheckoutFlowPlugin\Checkout;
 
 use Sylius\Bundle\CoreBundle\Checkout\CheckoutStateUrlGeneratorInterface;
 use Sylius\Component\Channel\Context\ChannelContextInterface;

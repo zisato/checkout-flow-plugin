@@ -1,4 +1,4 @@
 imports:
     - suites/ui/admin/managing_channels.yml
-    #- suites/ui/shop/managing_checkout_flow_1.yml
-    #- suites/ui/shop/managing_checkout_flow_2.yml
+    - suites/ui/shop/managing_checkout_flow_1.yml
+    - suites/ui/shop/managing_checkout_flow_2.yml

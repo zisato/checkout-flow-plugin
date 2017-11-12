@@ -4,8 +4,11 @@ namespace Jrc\CheckoutFlowPlugin\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\RequestMatcher;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\Yaml\Yaml;
 use winzou\Bundle\StateMachineBundle\DependencyInjection\winzouStateMachineExtension;
@@ -15,7 +18,7 @@ use winzou\Bundle\StateMachineBundle\DependencyInjection\winzouStateMachineExten
  *
  * @author javierrodriguez
  */
-final class JrcCheckoutFlowExtension extends Extension
+final class JrcCheckoutFlowExtension extends Extension implements PrependExtensionInterface
 {
     /**
      * {@inheritdoc}
@@ -39,6 +42,21 @@ final class JrcCheckoutFlowExtension extends Extension
         
         $formChoiceConfigs = $this->getFormChoiceConfig($smConfigs);
         $container->setParameter('jrc.checkout_flow_plugin.sm_configs_choices', $formChoiceConfigs);
+    }
+    
+    public function prepend(ContainerBuilder $container)
+    {  
+        $configs = $container->getExtensionConfig('sylius_shop');
+        
+        $groupCheckoutResolverDefinition = new Definition(
+            RequestMatcher::class, 
+            [$configs[0]['checkout_resolver']['pattern']]
+        );
+        
+        $container->setDefinition(
+            'jrc.checkout_flow_plugin.matcher.group_checkout', 
+            $groupCheckoutResolverDefinition
+        );
     }
     
     protected function parseFilesToArray(array $paths): array
@@ -85,7 +103,7 @@ final class JrcCheckoutFlowExtension extends Extension
         return array_combine($keys, $parsedConfig);
     }
     
-    public function getRouteMapConfigs($configs): array
+    protected function getRouteMapConfigs($configs): array
     {  
         $result = [];
         foreach ($configs as $key => $config) {
@@ -95,7 +113,7 @@ final class JrcCheckoutFlowExtension extends Extension
         return $result;
     }
     
-    public function getFormChoiceConfig($configs): array
+    protected function getFormChoiceConfig($configs): array
     {  
         $result = [];
         foreach ($configs as $key => $config) {

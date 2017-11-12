@@ -19,6 +19,16 @@ services:
         tags:
             - { name: form.type }
             
+    jrc.checkout_flow_plugin.listener.group_checkout:
+        class: Jrc\CheckoutFlowPlugin\Checkout\GroupCheckoutResolver
+        arguments:
+            - "@jrc.checkout_flow_plugin.matcher.group_checkout"
+            - "@sylius.context.cart"
+            - "@sylius.context.channel"
+            - "%jrc.checkout_flow_plugin.route_map%"
+        tags:
+            - { name: kernel.event_subscriber }
+            
     # decorated services
     jrc.checkout_flow_plugin.sm.factory:
         class: Jrc\CheckoutFlowPlugin\Factory\GroupFactory
@@ -30,7 +40,7 @@ services:
             - "%jrc.checkout_flow_plugin.sm_configs%"
 
     jrc.checkout_flow_plugin.router.group_checkout_state:
-        class: Jrc\CheckoutFlowPlugin\GroupCheckoutStateUrlGenerator
+        class: Jrc\CheckoutFlowPlugin\Checkout\GroupCheckoutStateUrlGenerator
         decorates: sylius.router.checkout_state
         arguments: 
             - "@jrc.checkout_flow_plugin.router.group_checkout_state.inner"
