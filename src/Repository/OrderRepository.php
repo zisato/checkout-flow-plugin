@@ -3,6 +3,8 @@
 namespace Jrc\CheckoutFlowPlugin\Repository;
 
 use Sylius\Bundle\CoreBundle\Doctrine\ORM\OrderRepository as BaseOrderRepository;
+use Sylius\Component\Core\Model\OrderInterface;
+use Sylius\Component\Core\OrderCheckoutStates;
 
 /**
  * Description of OrderRepository
@@ -17,9 +19,11 @@ class OrderRepository extends BaseOrderRepository
             ->select('o.id')
             ->innerJoin('o.channel', 'channel')
             ->where('channel.id = :channel')
-            ->andWhere('o.checkoutState NOT IN (:checkoutState)')
+            ->andWhere('o.state = :state')
+            ->andWhere('o.checkoutState != :checkoutState')
             ->setParameter('channel', $channel)
-            ->setParameter('checkoutState', ['cart', 'addressed', 'completed'])
+            ->setParameter('state', OrderInterface::STATE_CART)
+            ->setParameter('checkoutState', OrderCheckoutStates::STATE_CART)
             ->getQuery()
             ->getResult()
         ;
@@ -33,7 +37,7 @@ class OrderRepository extends BaseOrderRepository
             ->set('o.checkoutState', ':newCheckoutState')
             ->andWhere('o.id IN (:ordersId)')
             ->setParameter('ordersId', $ordersId)
-            ->setParameter('newCheckoutState', 'cart')
+            ->setParameter('newCheckoutState', OrderCheckoutStates::STATE_CART)
             ->getQuery()
             ->getResult()
         ;
