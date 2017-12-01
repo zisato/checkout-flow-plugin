@@ -2,6 +2,7 @@ version: "3.2"
 
 services:
     php:
+        container_name: checkoutflowplugin_php
         build: docker/php
         working_dir: /var/www/html
         ports:

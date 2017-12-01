@@ -88,6 +88,7 @@ In order to run Behat suites, execute following commands:
 $ docker-compose up
 $ docker exec -it checkoutflowplugin_php bash
 $ composer install
+$ docker exec -it checkoutflowplugin_php bash
 $ php tests/Application/bin/console server:run localhost:4444 --docroot=tests/Application/web/ --env test
 $ docker exec -it checkoutflowplugin_php bash
 $ php tests/Application/bin/console doctrine:database:create --env test
