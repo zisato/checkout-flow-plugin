@@ -62,6 +62,22 @@ final class UseCheckoutFlow2Context implements Context
     }
     
     /**
+     * @When I select :shippingMethod shipping method
+     */
+    public function iSelectShippingMethod($shippingMethod)
+    {
+        $this->selectShippingAndPaymentPage->selectShippingMethod($shippingMethod);
+    }
+
+    /**
+     * @When I select :paymentMethod payment method
+     */
+    public function iSelectPaymentMethod($paymentMethod)
+    {
+        $this->selectShippingAndPaymentPage->selectPaymentMethod($paymentMethod);
+    }
+    
+    /**
      * @When I complete the shipping and payment step
      */
     public function iCompleteTheShippingAndPaymentStep()

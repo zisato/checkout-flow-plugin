@@ -19,4 +19,5 @@ Feature: Purchase a product using checkout flow 1 for a channel
         And I complete the addressing step
         And I select "Free" shipping method
         And I complete the shipping step
-        Then I should be on the payment and complete step
+        Then I should be on the checkout payment and complete step
+        And I select "Offline" payment method

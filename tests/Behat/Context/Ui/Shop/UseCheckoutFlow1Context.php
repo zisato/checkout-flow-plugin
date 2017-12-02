@@ -60,11 +60,19 @@ final class UseCheckoutFlow1Context implements Context
     {
         $this->addressPage->specifyEmail($email);
     }
-
+    
     /**
-     * @Then I should be on the payment and complete step
+     * @Then I select :paymentMethod payment method
      */
-    public function iShouldBeOnThePaymentAndCompleteStep()
+    public function iSelectPaymentMethod($paymentMethod)
+    {
+        $this->paymentAndCompletePage->selectPaymentMethod($paymentMethod);
+    }
+    
+    /**
+     * @Then I should be on the checkout payment and complete step
+     */
+    public function iShouldBeOnTheCheckoutPaymentAndCompleteStep()
     {
         $this->paymentAndCompletePage->verify();
     }
