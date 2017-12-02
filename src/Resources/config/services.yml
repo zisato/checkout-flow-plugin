@@ -3,7 +3,7 @@ services:
         class: Jrc\CheckoutFlowPlugin\Controller\CheckoutStartController
         arguments:
             - "@sylius.context.channel"
-            - '@router'
+            - "@router"
             - "%jrc.checkout_flow_plugin.route_map%"
     
     jrc.checkout_flow_plugin.form.extension.checkout_flow_configuration:
@@ -21,8 +21,8 @@ services:
     jrc.checkout_flow_plugin.form.select_shipping_and_payment:
         class: Jrc\CheckoutFlowPlugin\Form\Type\Checkout\SelectShippingAndPaymentType
         arguments:
-            - %sylius.model.order.class%
-            - %sylius.form.type.order.validation_groups%
+            - "%sylius.model.order.class%"
+            - "%sylius.form.type.order.validation_groups%"
         tags:
             - { name: form.type }
     
