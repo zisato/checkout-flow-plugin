@@ -1,3 +1,10 @@
+sylius_shop_checkout_start:
+    path: /
+    methods: [GET]
+    defaults:
+        _controller: jrc.checkout_flow_plugin.controller.checkout_start:redirectAction
+        route: sylius_shop_checkout_address
+
 sylius_shop_checkout_select_payment_and_complete:
     path: /payment-complete
     methods: [GET, PUT]

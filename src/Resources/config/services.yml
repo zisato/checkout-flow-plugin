@@ -1,4 +1,11 @@
 services:
+    jrc.checkout_flow_plugin.controller.checkout_start:
+        class: Jrc\CheckoutFlowPlugin\Controller\CheckoutStartController
+        arguments:
+            - "@sylius.context.channel"
+            - '@router'
+            - "%jrc.checkout_flow_plugin.route_map%"
+    
     jrc.checkout_flow_plugin.form.extension.checkout_flow_configuration:
         class: Jrc\CheckoutFlowPlugin\Form\Extension\CheckoutFlowConfigurationExtension
         arguments: ["%jrc.checkout_flow_plugin.sm_configs_choices%"]
