@@ -25,6 +25,14 @@ services:
             - %sylius.form.type.order.validation_groups%
         tags:
             - { name: form.type }
+    
+    jrc.checkout_flow_plugin.form.address_select_shipping:
+        class: Jrc\CheckoutFlowPlugin\Form\Type\Checkout\AddressAndSelectShippingType
+        arguments:
+            - "%sylius.model.order.class%"
+            - "%sylius.form.type.order.validation_groups%"
+        tags:
+            - { name: form.type }
             
     jrc.checkout_flow_plugin.listener.group_checkout:
         class: Jrc\CheckoutFlowPlugin\Checkout\GroupCheckoutResolver

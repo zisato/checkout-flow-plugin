@@ -1,0 +1,6 @@
+{% include '@SyliusShop/Checkout/Address/_form.html.twig' with {'form': form.address} %}
+                            
+<legend>
+    {{ 'sylius.ui.shipment'|trans }}
+</legend>
+{% include '@SyliusShop/Checkout/SelectShipping/_form.html.twig' with {'form': form} %}

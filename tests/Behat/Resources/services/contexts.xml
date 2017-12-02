@@ -18,6 +18,14 @@
             <tag name="fob.context_service" />
         </service>
         
+        <!-- shop flow 3 -->
+        <service id="jrc.checkout_flow.context.ui.shop.use_checkout_flow_3" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Context\Ui\Shop\UseCheckoutFlow3Context">
+            <argument type="service" id="jrc.checkout_flow.page.shop.address_and_shipping" />
+            <argument type="service" id="jrc.checkout_flow.page.shop.payment_and_complete" />
+            <argument type="service" id="sylius.behat.shared_storage" />
+            <tag name="fob.context_service" />
+        </service>
+        
         <!-- admin -->
         <service id="jrc.checkout_flow.context.ui.admin.channel" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Context\Ui\Admin\ManagingChannelsContext">
             <argument type="service" id="__symfony_shared__.doctrine.orm.entity_manager" />

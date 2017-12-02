@@ -1,0 +1,10 @@
+{% set enabled = order.payments|length %}
+
+<div class="ui one column grid">
+    <div class="column">
+        <button type="submit" id="next-step" class="ui large primary icon labeled{% if not enabled %} disabled{% endif %} button">
+            <i class="arrow right icon"></i>
+            {{ 'sylius.ui.next'|trans }}
+        </button>
+    </div>
+</div>

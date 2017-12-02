@@ -1,0 +1,48 @@
+# cart -> address and select shipping -> payment and complete
+sylius_order_checkout_3:
+    choice_label: 'Cart->Address-and-Shipping->Payment-and-Complete'
+    route_map:
+        empty_order:
+            route: sylius_shop_cart_summary
+        cart:
+            route: sylius_shop_checkout_address_and_select_shipping
+        addressed_shipping_selected:
+            route: sylius_shop_checkout_select_payment_and_complete
+    state_machine:
+        class: "%sylius.model.order.class%"
+        property_path: checkoutState
+        graph: sylius_order_checkout
+        state_machine_class: "%sylius.state_machine.class%"
+        states:
+            cart: ~
+            addressed_shipping_selected: ~
+            completed: ~
+        transitions:
+            address_select_shipping:
+                from: [cart, addressed_shipping_selected]
+                to: addressed_shipping_selected
+            complete:
+                from: [addressed_shipping_selected]
+                to: completed
+        callbacks:
+            after:
+                sylius_process_cart:
+                    on: ["address_select_shipping"]
+                    do: ["@sylius.order_processing.order_processor", "process"]
+                    args: ["object"]
+                sylius_create_order:
+                    on: ["complete"]
+                    do: ["@sm.callback.cascade_transition", "apply"]
+                    args: ["object", "event", "'create'", "'sylius_order'"]
+                sylius_save_checkout_completion_date:
+                    on: ["complete"]
+                    do: ["object", "completeCheckout"]
+                    args: ["object"]
+                sylius_control_payment_state:
+                    on: ["complete"]
+                    do: ["@sylius.state_resolver.order_payment", "resolve"]
+                    args: ["object"]
+                sylius_control_shipping_state:
+                    on: ["complete"]
+                    do: ["@sylius.state_resolver.order_shipping", "resolve"]
+                    args: ["object"]

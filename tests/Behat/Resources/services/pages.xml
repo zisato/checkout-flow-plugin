@@ -12,6 +12,11 @@
             <argument type="string">sylius_shop_checkout_select_shipping_and_payment</argument>
         </service>
         
+        <!-- shop flow 3 -->
+        <service id="jrc.checkout_flow.page.shop.address_and_shipping" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Shop\AddressAndShippingPage" parent="sylius.behat.symfony_page" public="false">
+            <argument type="string">sylius_shop_checkout_address_and_select_shipping</argument>
+        </service>
+        
         <!-- admin -->
         <service id="jrc.checkout_flow.page.admin.create" class="Tests\Jrc\CheckoutFlowPlugin\Behat\Page\Admin\CreatePage" parent="sylius.behat.symfony_page" public="false">
             <argument type="string">sylius_admin_channel_create</argument>

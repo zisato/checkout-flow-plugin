@@ -48,3 +48,24 @@ sylius_shop_checkout_select_shipping_and_payment:
             state_machine:
                 graph: sylius_order_checkout
                 transition: select_shipping_payment
+
+sylius_shop_checkout_address_and_select_shipping:
+    path: /address-shipping
+    methods: [GET, PUT]
+    defaults:
+        _controller: sylius.controller.order:updateAction
+        _sylius:
+            event: shipping
+            flash: false
+            template: JrcCheckoutFlowPlugin:Checkout:addressSelectShipping.html.twig
+            form: Jrc\CheckoutFlowPlugin\Form\Type\Checkout\AddressAndSelectShippingType
+            redirect:
+                route: sylius_shop_checkout_select_payment_and_complete
+                parameters: []
+            repository:
+                method: find
+                arguments:
+                    - "expr:service('sylius.context.cart').getCart()"
+            state_machine:
+                graph: sylius_order_checkout
+                transition: address_select_shipping
